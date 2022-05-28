@@ -56,4 +56,14 @@ app.post("/createUser", (req, res) => {
     );
 });
 
+app.get("/read", (req, res) => {
+    connection.query("SELECT * FROM usuario", (err, rows) => {
+        if (err) {
+
+        } else {
+            res.json(rows);
+        }
+    })
+})
+
 app.listen(5000, () => console.log("listining on port 5000"));
