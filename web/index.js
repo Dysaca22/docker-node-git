@@ -2,7 +2,7 @@ const express = require("express");
 const mysql = require("mysql");
 const app = express();
 
-var connection;
+let connection;
 
 app.get("/", (req, res) => {
     res.send('Proyecto docker, Node js y git de Dylan, Laura y Mariana');
