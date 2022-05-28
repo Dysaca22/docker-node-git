@@ -31,11 +31,11 @@ app.get("/connectDB", (req, res) => {
 app.post("/createUser", (req, res) => {
     connection.query(
         "SELECT * FROM usuario WHERE nombreDeUsuario = '" +
-        req.params[0] +
+        req.query.nombreDeUsuario +
         "' AND clave = '" +
-        req.params[1] +
+        req.query.clave +
         "' AND idEvento = '" +
-        req.params[2] +
+        req.query.idEvento +
         "'",
         (err, rows) => {
             if (rows.length === 0) {
