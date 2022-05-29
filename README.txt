@@ -21,5 +21,8 @@ RUTAS
 4. /searchUser?nombreDeUsuario=...&clave=...&idEvento=...
   Devolver el id de usuario en caso exitoso y un nok en caso contrario
   Los ... indica el valor que se le asignara al parametro
-5. /read
+5. /deleteAll
+  Borrar todos los usuarios de la base de datos
+  Devuelve "Se han eliminado los usuarios correctamente." si todo se elimino correctamente
+6. /read
   Ver los valores que se encuentran en la base de datos
