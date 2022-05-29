@@ -75,6 +75,10 @@ app.get("/searchUser", (req, res) => {
     );
 });
 
+app.get("/deleteAll", (req, res) => {
+    connection.query("DELETE FROM usuario");
+});
+
 app.get("/read", (req, res) => {
     connection.query("SELECT * FROM usuario", (err, rows) => {
         if (err) {
