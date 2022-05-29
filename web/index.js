@@ -28,7 +28,6 @@ app.get("/", (req, res) => {
 
 app.get("/connectDB", (req, res) => {
     pool.getConnection(function(err, connection) {
-
         if (connection.state === "disconnected") {
             res.send("nok");
         } else {
@@ -106,7 +105,7 @@ app.get("/deleteAll", (req, res) => {
 });
 
 app.post("/loadCSV", async(req, res) => {
-    pool.getConnection(function(err, connection) {
+    pool.getConnection(async function(err, connection) {
         if (!req.files) return res.status(400).send("Sin archivos cargados");
 
         try {
