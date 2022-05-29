@@ -105,22 +105,22 @@ app.get("/deleteAll", (req, res) => {
 });
 
 app.post("/loadCSV", async(req, res) => {
-    pool.getConnection(async function(err, connection) {
-        if (!req.files) return res.status(400).send("Sin archivos cargados");
 
-        try {
-            const file = req.files.file;
+    if (!req.files) return res.status(400).send("Sin archivos cargados");
 
-            await csvtojson()
-                .fromFile(file.tempFilePath)
-                .then(async(source) => {
-                    try {
-                        for (var i = 0; i < source.length; i++) {
-                            var nombreDeUsuario = source[i]["nombreDeUsuario"],
-                                clave = source[i]["clave"],
-                                idEvento = source[i]["idEvento"];
+    try {
+        const file = req.files.file;
 
-                            await connection.query(
+        await csvtojson()
+            .fromFile(file.tempFilePath)
+            .then(async(source) => {
+                try {
+                    for (var i = 0; i < source.length; i++) {
+                        var nombreDeUsuario = source[i]["nombreDeUsuario"],
+                            clave = source[i]["clave"],
+                            idEvento = source[i]["idEvento"];
+                        pool.getConnection(function(err, connection) {
+                            connection.query(
                                 `INSERT INTO usuario (nombreDeUsuario, clave, idEvento) values(${nombreDeUsuario}, ${clave}, ${idEvento})`,
                                 (err, rows) => {
                                     if (err) {
@@ -128,17 +128,17 @@ app.post("/loadCSV", async(req, res) => {
                                     }
                                 }
                             );
-                        }
-                        res.send("Se agregaron todos los elementos correctamente");
-                    } catch {
-                        res.send("Hubo un error cargando el csv");
+                            connection.release();
+                        });
                     }
-                });
-        } catch {
-            res.send("El nombre del parametro del archivo debe llamarse 'file'");
-        }
-        connection.release();
-    });
+                    res.send("Se agregaron todos los elementos correctamente");
+                } catch {
+                    res.send("Hubo un error cargando el csv");
+                }
+            });
+    } catch {
+        res.send("El nombre del parametro del archivo debe llamarse 'file'");
+    }
 });
 
 app.get("/read", (req, res) => {
