@@ -20,19 +20,23 @@ const configDB = {
 };
 
 const connection = mysql.createConnection(configDB);
+connection.connect(function(err) {
+    if (err) {
+        return console.error("error: " + err.message);
+    }
+    console.log("Conectado a la base de datos");
+});
 
 app.get("/", (req, res) => {
     res.send("Proyecto docker, Node js y git de Dylan, Laura y Mariana");
 });
 
 app.get("/connectDB", (req, res) => {
-    connection.getConnection(function(error) {
-        if (error) {
-            res.send("nok");
-        } else {
-            res.send("ok");
-        }
-    });
+    if (connection.state === "disconnected") {
+        res.send("nok");
+    } else {
+        res.send("ok");
+    }
 });
 
 app.post("/createUser", (req, res) => {
