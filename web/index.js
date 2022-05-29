@@ -56,6 +56,25 @@ app.post("/createUser", (req, res) => {
     );
 });
 
+app.get("/searchUser", (req, res) => {
+    connection.query(
+        "SELECT idUsuario FROM usuario WHERE nombreDeUsuario = '" +
+        req.query.nombreDeUsuario +
+        "' AND clave = '" +
+        req.query.clave +
+        "' AND idEvento = '" +
+        req.query.idEvento +
+        "'",
+        (err, rows) => {
+            if (rows.length === 0) {
+                res.json(rows);
+            } else {
+                res.send("nok");
+            }
+        }
+    );
+});
+
 app.get("/read", (req, res) => {
     connection.query("SELECT * FROM usuario", (err, rows) => {
         if (err) {
@@ -64,6 +83,6 @@ app.get("/read", (req, res) => {
             res.json(rows);
         }
     })
-})
+});
 
 app.listen(5000, () => console.log("listining on port 5000"));
