@@ -29,9 +29,9 @@ RUTAS
   Borrar todos los usuarios de la base de datos
   Devuelve "Se han eliminado los usuarios correctamente." si todo se elimino correctamente
   
-6. /loadCSV?csv=...
+6. /loadCSV
   Inserta los datos de un .csv
-  Los ... indica el nombre del .csv sin especificar la extensión
+  El field name del parámetro debe ser "file" y un csv delimitado por coma (,)
 
 7. /read
   Ver los valores que se encuentran en la base de datos
