@@ -87,11 +87,11 @@ app.get("/deleteAll", (req, res) => {
     });
 });
 
-app.get("/loadCSV", (req, res) => {
+app.get("/loadCSV", async(req, res) => {
     const fileName = req.query.csv + ".csv";
-    console.log(req.query.csv);
-    csvtojson()
-        .fromFile(fileName)
+    const file = `${__dirname}\\${fileName}`;
+    await csvtojson()
+        .fromFile(file)
         .then((source) => {
             console.log(source.length);
             for (var i = 0; i < source.length; i++) {
