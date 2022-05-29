@@ -89,11 +89,11 @@ app.get("/deleteAll", (req, res) => {
 
 app.get("/loadCSV", (req, res) => {
     const fileName = req.query.csv + ".csv";
-
+    console.log(req.query.csv);
     csvtojson()
         .fromFile(fileName)
         .then((source) => {
-
+            console.log(source.length);
             for (var i = 0; i < source.length; i++) {
                 var nombreDeUsuario = source[i]["nombreDeUsuario"],
                     clave = source[i]["clave"],
