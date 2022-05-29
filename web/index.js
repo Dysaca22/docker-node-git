@@ -1,6 +1,7 @@
 const express = require("express");
 const mysql = require("mysql");
 const csvtojson = require('csvtojson');
+const path = require('path');
 
 const app = express();
 
@@ -89,7 +90,7 @@ app.get("/deleteAll", (req, res) => {
 
 app.get("/loadCSV", async(req, res) => {
     const fileName = req.query.csv + ".csv";
-    const file = `./${fileName}`;
+    const file = path.join(__dirname, '..', fileName);
     console.log(file);
     await csvtojson()
         .fromFile(file)
