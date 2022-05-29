@@ -4,7 +4,7 @@ COMANDOS DE DOCKER
 
 git clone https://github.com/Dysaca22/docker-node-git.git
 cd docker-node-git
-docker-compose up
+docker-compose up -d
 
 ##############################
 RUTAS
@@ -31,7 +31,7 @@ RUTAS
   
 6. /loadCSV?csv=...
   Inserta los datos de un .csv
-  Los  .. indica el nombre del .csv sin especificar la extensión
+  Los ... indica el nombre del .csv sin especificar la extensión
 
 7. /read
   Ver los valores que se encuentran en la base de datos
