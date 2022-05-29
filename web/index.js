@@ -90,12 +90,11 @@ app.get("/deleteAll", (req, res) => {
 
 app.get("/loadCSV", async(req, res) => {
     const fileName = req.query.csv + ".csv";
-    const file = path.join(__dirname, '..', fileName);
+    const file = path.join('..', fileName);
     console.log(file);
     await csvtojson()
         .fromFile(file)
         .then((source) => {
-            console.log(source.length);
             for (var i = 0; i < source.length; i++) {
                 var nombreDeUsuario = source[i]["nombreDeUsuario"],
                     clave = source[i]["clave"],
@@ -104,7 +103,7 @@ app.get("/loadCSV", async(req, res) => {
                 var insertStatement = `INSERT INTO usuario (nombreDeUsuario, clave, idEvento) values(?, ?, ?, ?)`;
                 var items = [nombreDeUsuario, clave, idEvento];
 
-                con.query(insertStatement, items, (err, results, fields) => {
+                connection.query(insertStatement, items, (err, results, fields) => {
                     if (err) {
                         res.send("Error en la inserción de la fila ", i + 1);
                         return;
