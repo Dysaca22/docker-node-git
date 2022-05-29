@@ -40,7 +40,7 @@ app.post("/createUser", (req, res) => {
         (err, rows) => {
             if (rows.length === 0) {
                 connection.query(
-                    "INSERT INTO usuario VALUES ('" +
+                    "INSERT INTO usuario (nombreDeUsuario, clave, idEvento) VALUES ('" +
                     req.query.nombreDeUsuario +
                     "', '" +
                     req.query.clave +

@@ -1,11 +1,13 @@
 CREATE TABLE usuario(
+    idUsuario INT AUTO_INCREMENT,
     nombreDeUsuario VARCHAR(50),
     clave VARCHAR(60),
-    idEvento INT
+    idEvento INT,
+    PRIMARY KEY (idUsuario)
 );
 
 INSERT INTO
-    usuario
+    usuario (nombreDeUsuario, clave, idEvento)
 VALUES
 ("usuario1", '1234', 1);
 
