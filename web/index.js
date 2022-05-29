@@ -41,11 +41,11 @@ app.post("/createUser", (req, res) => {
             if (rows.length === 0) {
                 connection.query(
                     "INSERT INTO usuario VALUES ('" +
-                    req.params[0] +
+                    req.query.nombreDeUsuario +
                     "', '" +
-                    req.params[1] +
+                    req.query.clave +
                     "', " +
-                    req.params[2] +
+                    req.query.idEvento +
                     ")"
                 );
                 res.send("ok");
