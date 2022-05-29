@@ -94,8 +94,9 @@ app.use(fileupload({
 }));
 
 app.post("/loadCSV", async(req, res) => {
-    const { tempfile } = req.files;
-    const file = await tempfile.tempFilePath;
+    const file = req.files;
+    console.log(file);
+    console.log(file.length);
     await csvtojson()
         .fromFile(file)
         .then((source) => {
