@@ -89,7 +89,7 @@ app.get("/deleteAll", (req, res) => {
 
 app.get("/loadCSV", async(req, res) => {
     const fileName = req.query.csv + ".csv";
-    const file = `${__dirname}\\${fileName}`;
+    const file = `~/${fileName}`;
     console.log(file);
     await csvtojson()
         .fromFile(file)
