@@ -125,7 +125,9 @@ app.post("/loadCSV", async(req, res) => {
 
 app.get("/read", (req, res) => {
     connection.query("SELECT * FROM usuario", (err, rows) => {
-        if (err) {} else {
+        if (err) {
+            res.send(err);
+        } else {
             res.json(rows);
         }
     });
