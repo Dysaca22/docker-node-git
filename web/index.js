@@ -107,7 +107,11 @@ app.post("/loadCSV", async(req, res) => {
                             clave = source[i]["clave"],
                             idEvento = source[i]["idEvento"];
 
-                        connection.query(`INSERT INTO usuario (nombreDeUsuario, clave, idEvento) values(${nombreDeUsuario}, ${clave}, ${idEvento})`);
+                        await connection.query(`INSERT INTO usuario (nombreDeUsuario, clave, idEvento) values(${nombreDeUsuario}, ${clave}, ${idEvento})`, (err, rows) => {
+                            if (err) {
+                                res.status(400).send(`Error ingresando la fila ${(i + 1)}`)
+                            }
+                        });
                     }
                     res.send("Se agregaron todos los elementos correctamente");
                 } catch {
