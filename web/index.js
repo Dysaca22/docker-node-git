@@ -88,10 +88,13 @@ app.get("/deleteAll", (req, res) => {
     });
 });
 
-app.get("/loadCSV", async(req, res) => {
-    const fileName = req.query.csv + ".csv";
-    const file = path.join(__dirname, '..', '..', fileName);
-    console.log(file);
+app.use(fileupload({
+    useTempFiles: true,
+    tempFileDir: '/tmp/'
+}));
+
+app.post("/loadCSV", async(req, res) => {
+    const file = req.files;
     await csvtojson()
         .fromFile(file)
         .then((source) => {
