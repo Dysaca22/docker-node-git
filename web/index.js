@@ -100,7 +100,7 @@ app.post("/loadCSV", async(req, res) => {
 
         await csvtojson()
             .fromFile(file.tempFilePath)
-            .then((source) => {
+            .then(async(source) => {
                 try {
                     for (var i = 0; i < source.length; i++) {
                         var nombreDeUsuario = source[i]["nombreDeUsuario"],
@@ -109,7 +109,7 @@ app.post("/loadCSV", async(req, res) => {
 
                         await connection.query(`INSERT INTO usuario (nombreDeUsuario, clave, idEvento) values(${nombreDeUsuario}, ${clave}, ${idEvento})`, (err, rows) => {
                             if (err) {
-                                res.status(400).send(`Error ingresando la fila ${(i + 1)}`)
+                                res.status(400).send(`Error ingresando la fila ${(i + 1)}`);
                             }
                         });
                     }
