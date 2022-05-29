@@ -4,6 +4,10 @@ const csvtojson = require('csvtojson');
 const fileupload = require('express-fileupload');
 
 const app = express();
+app.use(fileupload({
+    useTempFiles: true,
+    tempFileDir: '/tmp/'
+}));
 
 const connection = mysql.createConnection({
     connectionLimit: 10,
@@ -88,35 +92,27 @@ app.get("/deleteAll", (req, res) => {
     });
 });
 
-app.use(fileupload({
-    useTempFiles: true,
-    tempFileDir: '/tmp/'
-}));
-
 app.post("/loadCSV", async(req, res) => {
-    const file = req.files;
-    console.log(file);
-    console.log(file.length);
+    if (!req.files) return res.status(400).send("Sin archivos cargados");
+
+    const file = req.files.file;
     await csvtojson()
-        .fromFile(file)
+        .fromFile(file.tempFilePath)
         .then((source) => {
-            for (var i = 0; i < source.length; i++) {
-                var nombreDeUsuario = source[i]["nombreDeUsuario"],
-                    clave = source[i]["clave"],
-                    idEvento = source[i]["idEvento"];
+            try {
+                for (var i = 0; i < source.length; i++) {
+                    var nombreDeUsuario = source[i]["nombreDeUsuario"],
+                        clave = source[i]["clave"],
+                        idEvento = source[i]["idEvento"];
 
-                var insertStatement = `INSERT INTO usuario (nombreDeUsuario, clave, idEvento) values(?, ?, ?, ?)`;
-                var items = [nombreDeUsuario, clave, idEvento];
-
-                connection.query(insertStatement, items, (err, results, fields) => {
-                    if (err) {
-                        res.send("Error en la inserción de la fila ", i + 1);
-                        return;
-                    }
-                });
+                    connection.query(`INSERT INTO usuario (nombreDeUsuario, clave, idEvento) values(${nombreDeUsuario}, ${clave}, ${idEvento})`);
+                }
+                res.send("Se agregaron todos los elementos correctamente");
+            } catch {
+                res.send("Hubo un error cargando el csv");
             }
-            res.send("Se agregaron todos los elementos correctamente");
         });
+
 });
 
 app.get("/read", (req, res) => {
