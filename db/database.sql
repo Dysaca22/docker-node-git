@@ -7,7 +7,7 @@ CREATE TABLE usuario(
 INSERT INTO
     usuario
 VALUES
-("dysaca", '1234', 1);
+("usuario1", '1234', 1);
 
 ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'password';
 
