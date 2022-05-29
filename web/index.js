@@ -95,24 +95,28 @@ app.get("/deleteAll", (req, res) => {
 app.post("/loadCSV", async(req, res) => {
     if (!req.files) return res.status(400).send("Sin archivos cargados");
 
-    const file = req.files.file;
-    await csvtojson()
-        .fromFile(file.tempFilePath)
-        .then((source) => {
-            try {
-                for (var i = 0; i < source.length; i++) {
-                    var nombreDeUsuario = source[i]["nombreDeUsuario"],
-                        clave = source[i]["clave"],
-                        idEvento = source[i]["idEvento"];
+    try {
+        const file = req.files.file;
 
-                    connection.query(`INSERT INTO usuario (nombreDeUsuario, clave, idEvento) values(${nombreDeUsuario}, ${clave}, ${idEvento})`);
+        await csvtojson()
+            .fromFile(file.tempFilePath)
+            .then((source) => {
+                try {
+                    for (var i = 0; i < source.length; i++) {
+                        var nombreDeUsuario = source[i]["nombreDeUsuario"],
+                            clave = source[i]["clave"],
+                            idEvento = source[i]["idEvento"];
+
+                        connection.query(`INSERT INTO usuario (nombreDeUsuario, clave, idEvento) values(${nombreDeUsuario}, ${clave}, ${idEvento})`);
+                    }
+                    res.send("Se agregaron todos los elementos correctamente");
+                } catch {
+                    res.send("Hubo un error cargando el csv");
                 }
-                res.send("Se agregaron todos los elementos correctamente");
-            } catch {
-                res.send("Hubo un error cargando el csv");
-            }
-        });
-
+            });
+    } catch {
+        res.send("El nombre del parametro del archivo debe llamarse 'file'");
+    }
 });
 
 app.get("/read", (req, res) => {
