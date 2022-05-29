@@ -76,7 +76,13 @@ app.get("/searchUser", (req, res) => {
 });
 
 app.get("/deleteAll", (req, res) => {
-    connection.query("DELETE FROM usuario");
+    connection.query("DELETE FROM usuario", (err, rows) => {
+        if (err) {
+            res.send("Error en la eliminación");
+        } else {
+            res.send("Se han eliminado los usuarios correctamente.")
+        }
+    });
 });
 
 app.get("/read", (req, res) => {
