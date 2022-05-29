@@ -80,19 +80,43 @@ app.get("/deleteAll", (req, res) => {
         if (err) {
             res.send("Error en la eliminación");
         } else {
-            res.send("Se han eliminado los usuarios correctamente.")
+            res.send("Se han eliminado los usuarios correctamente.");
         }
     });
 });
 
+app.get("/loadCSV", (req, res) => {
+    const fileName = req.query.csv;
+
+    csvtojson()
+        .fromFile(fileName)
+        .then((source) => {
+
+            for (var i = 0; i < source.length; i++) {
+                var nombreDeUsuario = source[i]["nombreDeUsuario"],
+                    clave = source[i]["clave"],
+                    idEvento = source[i]["idEvento"];
+
+                var insertStatement = `INSERT INTO usuario (nombreDeUsuario, clave, idEvento) values(?, ?, ?, ?)`;
+                var items = [nombreDeUsuario, clave, idEvento];
+
+                con.query(insertStatement, items, (err, results, fields) => {
+                    if (err) {
+                        res.send("Error en la inserción de la fila ", i + 1);
+                        return;
+                    }
+                });
+            }
+            res.send("Se agregaron todos los elementos correctamente");
+        });
+});
+
 app.get("/read", (req, res) => {
     connection.query("SELECT * FROM usuario", (err, rows) => {
-        if (err) {
-
-        } else {
+        if (err) {} else {
             res.json(rows);
         }
-    })
+    });
 });
 
 app.listen(5000, () => console.log("listining on port 5000"));
