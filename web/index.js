@@ -67,9 +67,9 @@ app.get("/searchUser", (req, res) => {
         "'",
         (err, rows) => {
             if (rows.length === 0) {
-                res.json(rows);
-            } else {
                 res.send("nok");
+            } else {
+                res.json(rows);
             }
         }
     );
