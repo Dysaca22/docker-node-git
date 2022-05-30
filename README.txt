@@ -21,7 +21,7 @@ RUTAS
   Almacenar en la base de datos en caso ok
   Los ... indica el valor que se le asignara al parametro
   
-4. /searchUser?nombreDeUsuario=...&clave=...&idEvento=... (GET)
+4. /searchUser?nombreDeUsuario=...&clave=...&idEvento=... (POST)
   Devolver el id de usuario en caso exitoso y un nok en caso contrario
   Los ... indica el valor que se le asignara al parametro
   
