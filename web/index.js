@@ -113,7 +113,7 @@ app.post("/loadCSV", async(req, res) => {
             .fromFile(file.tempFilePath)
             .then(async(source) => {
                 try {
-                    const repe = [];
+                    let repe = [];
                     for (var i = 0; i < source.length; i++) {
                         var nombreDeUsuario = source[i]["nombreDeUsuario"],
                             clave = source[i]["clave"],
