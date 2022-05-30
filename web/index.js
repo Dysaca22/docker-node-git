@@ -18,6 +18,7 @@ const configDB = {
     password: process.env.MYSQL_PASSWORD || "password",
     database: process.env.MYSQL_DATABASE || "test",
 };
+console.log(configDB.host);
 
 const pool = mysql.createPool(configDB);
 
