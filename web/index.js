@@ -12,13 +12,12 @@ app.use(
 );
 
 const configDB = {
-    connectionLimit: 10,
+    connectionLimit: 1000,
     host: process.env.MYSQL_HOST || "localhost",
     user: process.env.MYSQL_USER || "root",
     password: process.env.MYSQL_PASSWORD || "password",
     database: process.env.MYSQL_DATABASE || "test",
 };
-console.log(configDB.host);
 
 const pool = mysql.createPool(configDB);
 
@@ -34,7 +33,7 @@ app.get("/connectDB", (req, res) => {
         } else {
             res.send("ok");
         }
-        connection.release();
+        connection.end();
     });
 });
 
@@ -66,7 +65,7 @@ app.post("/createUser", (req, res) => {
                 }
             }
         );
-        connection.release();
+        connection.end();
     });
 });
 
@@ -88,7 +87,7 @@ app.get("/searchUser", (req, res) => {
                 }
             }
         );
-        connection.release();
+        connection.end();
     });
 });
 
@@ -101,7 +100,7 @@ app.get("/deleteAll", (req, res) => {
                 res.send("Se han eliminado los usuarios correctamente.");
             }
         });
-        connection.release();
+        connection.end();
     });
 });
 
@@ -124,7 +123,7 @@ app.post("/loadCSV", async(req, res) => {
                         await pool.getConnection(async function(err, connection) {
                             await connection.query(
                                 `INSERT INTO usuario (nombreDeUsuario, clave, idEvento) VALUES (${nombreDeUsuario}, ${clave}, ${idEvento});`);
-                            connection.release();
+                            connection.end();
                         });
                     }
                     res.send("Se agregaron todos los elementos correctamente");
