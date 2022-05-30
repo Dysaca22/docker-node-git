@@ -107,13 +107,14 @@ app.get("/deleteAll", (req, res) => {
 app.post("/loadCSV", async(req, res) => {
     if (!req.files) return res.send("Sin archivos cargados");
 
+    const repe = [];
     try {
         const file = req.files.file;
         await csvtojson()
             .fromFile(file.tempFilePath)
             .then(async(source) => {
                 try {
-                    let repe = [];
+
                     for (var i = 0; i < source.length; i++) {
                         var nombreDeUsuario = source[i]["nombreDeUsuario"],
                             clave = source[i]["clave"],
@@ -140,7 +141,7 @@ app.post("/loadCSV", async(req, res) => {
                                             ")"
                                         );
                                     } else {
-                                        repe.push((i + 1));
+                                        repe = repe.concat([i + 1]);
                                     }
                                 }
                             );
