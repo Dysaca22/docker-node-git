@@ -119,6 +119,7 @@ app.post("/loadCSV", (req, res) => {
                             var nombreDeUsuario = source[i]["nombreDeUsuario"],
                                 clave = source[i]["clave"],
                                 idEvento = source[i]["idEvento"];
+                            console.log(i);
                             agregarUsuario(conn, nombreDeUsuario, clave, idEvento);
                         }
                         res.send("ok");
@@ -130,7 +131,7 @@ app.post("/loadCSV", (req, res) => {
         } catch {
             res.send("El nombre del parametro del archivo debe llamarse 'file'");
         }
-        connection.end();
+        conn.end();
     });
 });
 
