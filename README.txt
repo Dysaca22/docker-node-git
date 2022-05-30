@@ -72,8 +72,11 @@ RUTAS
 ADICIONAL
 ############################################################
 
-Para poder ver los mensajes por consola de la app web inserte
-docker logs <CONTAINER ID>
+Para poder ver los mensajes por consola de la app web
+  docker logs <CONTAINER ID>
+ 
+Para bajar la app web y la base de datos
+  docker-compose down
 
 ############################################################
 INTEGRANTES
