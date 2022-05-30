@@ -33,7 +33,7 @@ app.get("/connectDB", (req, res) => {
         } else {
             res.send("ok");
         }
-        connection.end();
+        connection.destroy();
     });
 });
 
@@ -65,7 +65,7 @@ app.post("/createUser", (req, res) => {
                 }
             }
         );
-        connection.end();
+        connection.destroy();
     });
 });
 
@@ -87,7 +87,7 @@ app.get("/searchUser", (req, res) => {
                 }
             }
         );
-        connection.end();
+        connection.destroy();
     });
 });
 
@@ -100,7 +100,7 @@ app.get("/deleteAll", (req, res) => {
                 res.send("Se han eliminado los usuarios correctamente.");
             }
         });
-        connection.end();
+        connection.destroy();
     });
 });
 
@@ -123,7 +123,7 @@ app.post("/loadCSV", async(req, res) => {
                         await pool.getConnection(async function(err, connection) {
                             await connection.query(
                                 `INSERT INTO usuario (nombreDeUsuario, clave, idEvento) VALUES (${nombreDeUsuario}, ${clave}, ${idEvento});`);
-                            connection.end();
+                            connection.destroy();
                         });
                     }
                     res.send("Se agregaron todos los elementos correctamente");
@@ -145,7 +145,7 @@ app.get("/read", (req, res) => {
                 res.json(rows);
             }
         });
-        connection.release();
+        connection.destroy();
     });
 });
 
