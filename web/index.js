@@ -121,14 +121,7 @@ app.post("/loadCSV", async(req, res) => {
                             idEvento = source[i]["idEvento"];
                         await pool.getConnection(async function(err, connection) {
                             await connection.query(
-                                `INSERT INTO usuario (nombreDeUsuario, clave, idEvento) values(${nombreDeUsuario}, ${clave}, ${idEvento})`,
-                                (err, rows) => {
-                                    if (err) {
-                                        res.send(err);
-                                        return;
-                                    }
-                                }
-                            );
+                                `INSERT INTO usuario (nombreDeUsuario, clave, idEvento) VALUES (${nombreDeUsuario}, ${clave}, ${idEvento});`);
                             connection.release();
                         });
                     }
