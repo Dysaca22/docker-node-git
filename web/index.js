@@ -111,13 +111,14 @@ app.post("/loadCSV", async(req, res) => {
         const file = req.files.file;
         await csvtojson()
             .fromFile(file.tempFilePath)
-            .then(async(source) => {
+            .then((source) => {
                 try {
                     for (var i = 0; i < source.length; i++) {
                         var nombreDeUsuario = source[i]["nombreDeUsuario"],
                             clave = source[i]["clave"],
                             idEvento = source[i]["idEvento"];
-                        await pool.getConnection(function(err, connection) {
+                        console.log(nombreDeUsuario, clave, idEvento);
+                        pool.getConnection(function(err, connection) {
 
                             connection.query(
                                 "SELECT * FROM usuario WHERE nombreDeUsuario = '" +
