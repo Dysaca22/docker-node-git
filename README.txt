@@ -78,6 +78,8 @@ Para poder ver los mensajes por consola de la app web
 Para bajar la app web y la base de datos
   docker-compose down
 
+Dentro de los archivos hay un documento .csv que el que se uso para las pruebas, puede ser usado como en el ejemplo.
+
 ############################################################
 INTEGRANTES
 ############################################################
