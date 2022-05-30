@@ -145,7 +145,7 @@ function agregarUsuario(conn, nombreDeUsuario, clave, idEvento) {
         "'",
         (err, rows) => {
             if (rows.length === 0) {
-                connection.query(
+                conn.query(
                     "INSERT INTO usuario (nombreDeUsuario, clave, idEvento) VALUES ('" +
                     nombreDeUsuario +
                     "', '" +
