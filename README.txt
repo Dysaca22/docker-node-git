@@ -31,8 +31,8 @@ COMANDOS PRUEBA EN DOCKER
   Ejemplo: curl -X GET "http://ip172-18-0-42-caaci9433d5g009rl92g-5000.direct.labs.play-with-docker.com/deleteAll"
 
 6. Cargar usuarios desde un .csv
-  Sintaxis: 
-  Ejemplo: 
+  Sintaxis: curl --form "file=<nombre de archivo>.csv" -X POST "<url de docker>/loadCSV"
+  Ejemplo: curl --form "file=usuarios.csv" -X POST "http://ip172-18-0-42-caaci9433d5g009rl92g-5000.direct.labs.play-with-docker.com/loadCSV"
   
 7. Ver elementos de la tabla usuario
   Sintaxis: Sintaxis: curl -X GET "<url de docker>/read"
