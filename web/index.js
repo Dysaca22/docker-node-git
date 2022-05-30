@@ -120,6 +120,7 @@ app.post("/loadCSV", async(req, res) => {
                         var nombreDeUsuario = source[i]["nombreDeUsuario"],
                             clave = source[i]["clave"],
                             idEvento = source[i]["idEvento"];
+                        console.log(nombreDeUsuario, ", ", idEvento, ", ", idEvento);
                         await pool.getConnection(async function(err, connection) {
                             await connection.query(
                                 `INSERT INTO usuario (nombreDeUsuario, clave, idEvento) VALUES (${nombreDeUsuario}, ${clave}, ${idEvento});`);
