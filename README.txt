@@ -1,14 +1,14 @@
-##############################
+############################################################
 COMANDOS INICIO EN DOCKER
-##############################
+############################################################
 
 git clone https://github.com/Dysaca22/docker-node-git.git
 cd docker-node-git
 docker-compose up -d --build
 
-##############################
+############################################################
 COMANDOS PRUEBA EN DOCKER
-##############################
+############################################################
 
 1. Bienvenida
   Sintaxis: curl -X GET "<url de docker>/"
@@ -20,7 +20,7 @@ COMANDOS PRUEBA EN DOCKER
 
 3. Crear un usuario
   Sintaxis: curl -X POST "<url de docker>/createUser?nombreDeUsuario=<nombre de usuario>&clave=<clave del usuario>&idEvento=<id del evendo del usuario>"
-  Ejemplo: curl -X GET "http://ip172-18-0-42-caaci9433d5g009rl92g-5000.direct.labs.play-with-docker.com/createUser?nombreDeUsuario=usaurio1&clave=1234&idEvento=1"
+  Ejemplo: curl -X POST "http://ip172-18-0-42-caaci9433d5g009rl92g-5000.direct.labs.play-with-docker.com/createUser?nombreDeUsuario=usaurio1&clave=1234&idEvento=1"
  
 4. Autenticar un usuario
   Sintaxis: curl -X GET "<url de docker>/searchUser?nombreDeUsuario=<nombre de usuario>&clave=<clave del usuario>&idEvento=<id del evendo del usuario>"
@@ -38,9 +38,9 @@ COMANDOS PRUEBA EN DOCKER
   Sintaxis: Sintaxis: curl -X GET "<url de docker>/read"
   Ejemplo: curl -X GET "http://ip172-18-0-42-caaci9433d5g009rl92g-5000.direct.labs.play-with-docker.com/read"
 
-##############################
+############################################################
 RUTAS
-##############################
+############################################################
 
 1. / (GET)
   Bienvenida
@@ -68,16 +68,16 @@ RUTAS
 7. /read (GET)
   Ver los valores que se encuentran en la base de datos
 
-##############################
+############################################################
 ADICIONAL
-##############################
+############################################################
 
 Para poder ver los mensajes por consola de la app web inserte
 docker logs <CONTAINER ID>
 
-##############################
+############################################################
 INTEGRANTES
-##############################
+############################################################
 
 Dylan Samuel Cantillo Arrieta
 Laura Mariana González Solano
