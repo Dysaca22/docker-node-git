@@ -118,7 +118,7 @@ app.post("/loadCSV", async(req, res) => {
                         var nombreDeUsuario = source[i]["nombreDeUsuario"],
                             clave = source[i]["clave"],
                             idEvento = source[i]["idEvento"];
-                        connection.query(
+                        await connection.query(
                             "SELECT * FROM usuario WHERE nombreDeUsuario = '" +
                             nombreDeUsuario +
                             "' AND clave = '" +
@@ -142,6 +142,7 @@ app.post("/loadCSV", async(req, res) => {
                                 }
                             }
                         );
+                        connection.end();
                     }
                     if (sw) {
                         res.send("ok");
