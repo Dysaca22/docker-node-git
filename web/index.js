@@ -118,7 +118,7 @@ app.post("/loadCSV", async(req, res) => {
                         var nombreDeUsuario = source[i]["nombreDeUsuario"],
                             clave = source[i]["clave"],
                             idEvento = source[i]["idEvento"];
-                        pool.getConnection(function(err, connection) {
+                        await pool.getConnection(function(err, connection) {
 
                             connection.query(
                                 "SELECT * FROM usuario WHERE nombreDeUsuario = '" +
@@ -152,7 +152,8 @@ app.post("/loadCSV", async(req, res) => {
                     } else {
                         res.send(`Filas ${repe} nok, las demas ok`);
                     }
-                } catch {
+                } catch (e) {
+                    console.log(e);
                     res.send("Hubo un error cargando el csv");
                 }
             });
