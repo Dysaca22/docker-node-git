@@ -107,21 +107,19 @@ app.get("/deleteAll", (req, res) => {
 app.post("/loadCSV", async(req, res) => {
     if (!req.files) return res.send("Sin archivos cargados");
 
-    const repe = [];
     try {
         const file = req.files.file;
         await csvtojson()
             .fromFile(file.tempFilePath)
             .then(async(source) => {
                 try {
-
                     for (var i = 0; i < source.length; i++) {
                         var nombreDeUsuario = source[i]["nombreDeUsuario"],
                             clave = source[i]["clave"],
                             idEvento = source[i]["idEvento"];
-                        await pool.getConnection(async function(err, connection) {
+                        await pool.getConnection(function(err, connection) {
 
-                            await connection.query(
+                            connection.query(
                                 "SELECT * FROM usuario WHERE nombreDeUsuario = '" +
                                 nombreDeUsuario +
                                 "' AND clave = '" +
@@ -129,9 +127,9 @@ app.post("/loadCSV", async(req, res) => {
                                 "' AND idEvento = '" +
                                 idEvento +
                                 "'",
-                                async(err, rows) => {
+                                (err, rows) => {
                                     if (rows.length === 0) {
-                                        await connection.query(
+                                        connection.query(
                                             "INSERT INTO usuario (nombreDeUsuario, clave, idEvento) VALUES ('" +
                                             nombreDeUsuario +
                                             "', '" +
@@ -140,19 +138,13 @@ app.post("/loadCSV", async(req, res) => {
                                             idEvento +
                                             ")"
                                         );
-                                    } else {
-                                        repe = repe.concat([`${i + 1}`]);
                                     }
                                 }
                             );
                             connection.end();
                         });
                     }
-                    if (repe.length === 0) {
-                        res.send("ok");
-                    } else {
-                        res.send(`Filas ${repe} nok, las demas ok`);
-                    }
+                    res.send("ok");
                 } catch (e) {
                     console.log(e);
                     res.send("Hubo un error cargando el csv");
