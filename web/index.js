@@ -106,7 +106,7 @@ app.get("/deleteAll", (req, res) => {
 
 app.post("/loadCSV", async(req, res) => {
 
-    if (!req.files) return res.status(400).send("Sin archivos cargados");
+    if (!req.files) return res.send("Sin archivos cargados");
 
     try {
         const file = req.files.file;
@@ -119,12 +119,12 @@ app.post("/loadCSV", async(req, res) => {
                         var nombreDeUsuario = source[i]["nombreDeUsuario"],
                             clave = source[i]["clave"],
                             idEvento = source[i]["idEvento"];
-                        pool.getConnection(function(err, connection) {
-                            connection.query(
+                        await pool.getConnection(async function(err, connection) {
+                            await connection.query(
                                 `INSERT INTO usuario (nombreDeUsuario, clave, idEvento) values(${nombreDeUsuario}, ${clave}, ${idEvento})`,
                                 (err, rows) => {
                                     if (err) {
-                                        res.status(400).send(`Error ingresando la fila ${i + 1}`);
+                                        res.send(err);
                                     }
                                 }
                             );
