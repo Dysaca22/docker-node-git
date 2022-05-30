@@ -140,6 +140,7 @@ app.post("/loadCSV", async(req, res) => {
                                             ")"
                                         );
                                     } else {
+                                        console.log("entra");
                                         repe.push(i + 1);
                                     }
                                 }
