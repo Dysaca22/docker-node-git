@@ -147,7 +147,7 @@ app.post("/loadCSV", async(req, res) => {
                             connection.end();
                         });
                     }
-                    if (sw) {
+                    if (repe.length === 0) {
                         res.send("ok");
                     } else {
                         res.send(`Filas ${repe} nok, las demas ok`);
