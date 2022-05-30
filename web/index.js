@@ -125,6 +125,7 @@ app.post("/loadCSV", async(req, res) => {
                                 (err, rows) => {
                                     if (err) {
                                         res.send(err);
+                                        return;
                                     }
                                 }
                             );
