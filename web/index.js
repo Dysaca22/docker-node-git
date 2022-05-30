@@ -113,7 +113,7 @@ app.post("/loadCSV", async(req, res) => {
             .fromFile(file.tempFilePath)
             .then(async(source) => {
                 try {
-                    var repe = [];
+                    const repe = [];
                     for (var i = 0; i < source.length; i++) {
                         var nombreDeUsuario = source[i]["nombreDeUsuario"],
                             clave = source[i]["clave"],
@@ -147,7 +147,7 @@ app.post("/loadCSV", async(req, res) => {
                             connection.end();
                         });
                     }
-                    if (arrayVacio(repe)) {
+                    if (repe.length === 0) {
                         res.send("ok");
                     } else {
                         res.send(`Filas ${repe} nok, las demas ok`);
@@ -161,8 +161,6 @@ app.post("/loadCSV", async(req, res) => {
         res.send("El nombre del parametro del archivo debe llamarse 'file'");
     }
 });
-
-const arrayVacio = (arr) => !Array.isArray(arr) || arr.length === 0;
 
 app.get("/read", (req, res) => {
     pool.getConnection(function(err, connection) {
