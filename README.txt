@@ -12,31 +12,31 @@ COMANDOS PRUEBA EN DOCKER
 
 1. Bienvenida
   Sintaxis: curl -X GET "<url de docker>/"
-  Ejemplo: curl -X GET "http://ip172-18-0-42-caaci9433d5g009rl92g-5000.direct.labs.play-with-docker.com/"
+  Ejemplo: curl -X GET "http://ip172-18-0-115-caag2c14lkkg00d923s0-5000.direct.labs.play-with-docker.com/"
  
 2. Verificar conexión a la base de datos
   Sintaxis: curl -X GET "<url de docker>/connectDB"
-  Ejemplo: curl -X GET "http://ip172-18-0-42-caaci9433d5g009rl92g-5000.direct.labs.play-with-docker.com/connectDB"
+  Ejemplo: curl -X GET "http://ip172-18-0-115-caag2c14lkkg00d923s0-5000.direct.labs.play-with-docker.com/connectDB"
 
 3. Crear un usuario
   Sintaxis: curl -X POST "<url de docker>/createUser?nombreDeUsuario=<nombre de usuario>&clave=<clave del usuario>&idEvento=<id del evendo del usuario>"
-  Ejemplo: curl -X POST "http://ip172-18-0-42-caaci9433d5g009rl92g-5000.direct.labs.play-with-docker.com/createUser?nombreDeUsuario=usaurio1&clave=1234&idEvento=1"
+  Ejemplo: curl -X POST "http://ip172-18-0-115-caag2c14lkkg00d923s0-5000.direct.labs.play-with-docker.com/createUser?nombreDeUsuario=usaurio1&clave=1234&idEvento=1"
  
 4. Autenticar un usuario
   Sintaxis: curl -X GET "<url de docker>/searchUser?nombreDeUsuario=<nombre de usuario>&clave=<clave del usuario>&idEvento=<id del evendo del usuario>"
-  Ejemplo: curl -X GET "http://ip172-18-0-42-caaci9433d5g009rl92g-5000.direct.labs.play-with-docker.com/searchUser?nombreDeUsuario=usaurio2&clave=1234&idEvento=1"
+  Ejemplo: curl -X GET "http://ip172-18-0-115-caag2c14lkkg00d923s0-5000.direct.labs.play-with-docker.com/searchUser?nombreDeUsuario=usaurio2&clave=1234&idEvento=1"
 
 5. Borrar todos los usuarios de la base de datos
   Sintaxis: curl -X GET "<url de docker>/deleteAll"
-  Ejemplo: curl -X GET "http://ip172-18-0-42-caaci9433d5g009rl92g-5000.direct.labs.play-with-docker.com/deleteAll"
+  Ejemplo: curl -X GET "http://ip172-18-0-115-caag2c14lkkg00d923s0-5000.direct.labs.play-with-docker.com/deleteAll"
 
 6. Cargar usuarios desde un .csv
   Sintaxis: curl --form "file=@<nombre de archivo>.csv" -X POST "<url de docker>/loadCSV"
-  Ejemplo: curl --form "file=@usuarios.csv" -X POST "http://ip172-18-0-42-caaci9433d5g009rl92g-5000.direct.labs.play-with-docker.com/loadCSV"
+  Ejemplo: curl --form "file=@usuarios.csv" -X POST "http://ip172-18-0-115-caag2c14lkkg00d923s0-5000.direct.labs.play-with-docker.com/loadCSV"
   
 7. Ver elementos de la tabla usuario
   Sintaxis: Sintaxis: curl -X GET "<url de docker>/read"
-  Ejemplo: curl -X GET "http://ip172-18-0-42-caaci9433d5g009rl92g-5000.direct.labs.play-with-docker.com/read"
+  Ejemplo: curl -X GET "http://ip172-18-0-115-caag2c14lkkg00d923s0-5000.direct.labs.play-with-docker.com/read"
 
 ############################################################
 RUTAS

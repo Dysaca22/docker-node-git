@@ -119,9 +119,9 @@ app.post("/loadCSV", async(req, res) => {
                         var nombreDeUsuario = source[i]["nombreDeUsuario"],
                             clave = source[i]["clave"],
                             idEvento = source[i]["idEvento"];
-                        await pool.getConnection(function(err, connection) {
+                        await pool.getConnection(async function(err, connection) {
 
-                            connection.query(
+                            await connection.query(
                                 "SELECT * FROM usuario WHERE nombreDeUsuario = '" +
                                 nombreDeUsuario +
                                 "' AND clave = '" +
@@ -129,9 +129,9 @@ app.post("/loadCSV", async(req, res) => {
                                 "' AND idEvento = '" +
                                 idEvento +
                                 "'",
-                                (err, rows) => {
+                                async(err, rows) => {
                                     if (rows.length === 0) {
-                                        connection.query(
+                                        await connection.query(
                                             "INSERT INTO usuario (nombreDeUsuario, clave, idEvento) VALUES ('" +
                                             nombreDeUsuario +
                                             "', '" +
@@ -141,7 +141,7 @@ app.post("/loadCSV", async(req, res) => {
                                             ")"
                                         );
                                     } else {
-                                        repe = repe.concat([i + 1]);
+                                        repe = repe.concat([`${i + 1}`]);
                                     }
                                 }
                             );
