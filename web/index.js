@@ -113,41 +113,44 @@ app.post("/loadCSV", async(req, res) => {
             .fromFile(file.tempFilePath)
             .then(async(source) => {
                 try {
-                    sw = true;
+                    repe = [];
                     for (var i = 0; i < source.length; i++) {
                         var nombreDeUsuario = source[i]["nombreDeUsuario"],
                             clave = source[i]["clave"],
                             idEvento = source[i]["idEvento"];
-                        await connection.query(
-                            "SELECT * FROM usuario WHERE nombreDeUsuario = '" +
-                            nombreDeUsuario +
-                            "' AND clave = '" +
-                            clave +
-                            "' AND idEvento = '" +
-                            idEvento +
-                            "'",
-                            (err, rows) => {
-                                if (rows.length === 0) {
-                                    connection.query(
-                                        "INSERT INTO usuario (nombreDeUsuario, clave, idEvento) VALUES ('" +
-                                        nombreDeUsuario +
-                                        "', '" +
-                                        clave +
-                                        "', " +
-                                        idEvento +
-                                        ")"
-                                    );
-                                } else {
-                                    sw = false;
+                        pool.getConnection(function(err, connection) {
+
+                            connection.query(
+                                "SELECT * FROM usuario WHERE nombreDeUsuario = '" +
+                                nombreDeUsuario +
+                                "' AND clave = '" +
+                                clave +
+                                "' AND idEvento = '" +
+                                idEvento +
+                                "'",
+                                (err, rows) => {
+                                    if (rows.length === 0) {
+                                        connection.query(
+                                            "INSERT INTO usuario (nombreDeUsuario, clave, idEvento) VALUES ('" +
+                                            nombreDeUsuario +
+                                            "', '" +
+                                            clave +
+                                            "', " +
+                                            idEvento +
+                                            ")"
+                                        );
+                                    } else {
+                                        repe.push(i + 1);
+                                    }
                                 }
-                            }
-                        );
-                        connection.end();
+                            );
+                            connection.end();
+                        });
                     }
                     if (sw) {
                         res.send("ok");
                     } else {
-                        res.send("Alguna de los usuarios esta repetido");
+                        res.send(`Filas ${repe} nok, las demas ok`);
                     }
                 } catch {
                     res.send("Hubo un error cargando el csv");
