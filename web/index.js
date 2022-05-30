@@ -33,7 +33,7 @@ app.get("/connectDB", (req, res) => {
         } else {
             res.send("ok");
         }
-        connection.destroy();
+        connection.end();
     });
 });
 
@@ -65,7 +65,7 @@ app.post("/createUser", (req, res) => {
                 }
             }
         );
-        connection.destroy();
+        connection.end();
     });
 });
 
@@ -87,7 +87,7 @@ app.get("/searchUser", (req, res) => {
                 }
             }
         );
-        connection.destroy();
+        connection.end();
     });
 });
 
@@ -100,17 +100,15 @@ app.get("/deleteAll", (req, res) => {
                 res.send("Se han eliminado los usuarios correctamente.");
             }
         });
-        connection.destroy();
+        connection.end();
     });
 });
 
 app.post("/loadCSV", async(req, res) => {
-
     if (!req.files) return res.send("Sin archivos cargados");
 
     try {
         const file = req.files.file;
-
         await csvtojson()
             .fromFile(file.tempFilePath)
             .then(async(source) => {
@@ -145,7 +143,7 @@ app.get("/read", (req, res) => {
                 res.json(rows);
             }
         });
-        connection.destroy();
+        connection.end();
     });
 });
 
