@@ -104,62 +104,59 @@ app.get("/deleteAll", (req, res) => {
     });
 });
 
-app.post("/loadCSV", async(req, res) => {
+app.post("/loadCSV", (req, res) => {
     if (!req.files) return res.send("Sin archivos cargados");
 
-    pool.getConnection((err, connection) => {
-
-        try {
-            const file = req.files.file;
-            csvtojson()
-                .fromFile(file.tempFilePath)
-                .then((source) => {
-                    try {
-                        for (var i = 0; i < source.length; i++) {
-                            var nombreDeUsuario = source[i]["nombreDeUsuario"],
-                                clave = source[i]["clave"],
-                                idEvento = source[i]["idEvento"];
-                            agregarUsuario(connection, nombreDeUsuario, clave, idEvento);
-                        }
-                        res.send("ok");
-                    } catch (e) {
-                        console.log(e);
-                        res.send("Hubo un error cargando el csv");
+    try {
+        const file = req.files.file;
+        csvtojson()
+            .fromFile(file.tempFilePath)
+            .then(async(source) => {
+                try {
+                    for (var i = 0; i < source.length; i++) {
+                        var nombreDeUsuario = source[i]["nombreDeUsuario"],
+                            clave = source[i]["clave"],
+                            idEvento = source[i]["idEvento"];
+                        await agregarUsuario(nombreDeUsuario, clave, idEvento);
                     }
-                });
-        } catch {
-            res.send("El nombre del parametro del archivo debe llamarse 'file'");
-        }
-        connection.end();
-    });
+                    res.send("ok");
+                } catch (e) {
+                    console.log(e);
+                    res.send("Hubo un error cargando el csv");
+                }
+            });
+    } catch {
+        res.send("El nombre del parametro del archivo debe llamarse 'file'");
+    }
 });
 
-function agregarUsuario(conn, nombreDeUsuario, clave, idEvento) {
-    conn.query(
-        "SELECT * FROM usuario WHERE nombreDeUsuario = '" +
-        nombreDeUsuario +
-        "' AND clave = '" +
-        clave +
-        "' AND idEvento = '" +
-        idEvento +
-        "'",
-        (err, rows) => {
-            if (rows.length === 0) {
-                conn.query(
-                    "INSERT INTO usuario (nombreDeUsuario, clave, idEvento) VALUES ('" +
-                    nombreDeUsuario +
-                    "', '" +
-                    clave +
-                    "', " +
-                    idEvento +
-                    ")"
-                );
-            } else {
-                return false;
+function agregarUsuario(nombreDeUsuario, clave, idEvento) {
+    pool.getConnection(function(err, connection) {
+
+        connection.query(
+            "SELECT * FROM usuario WHERE nombreDeUsuario = '" +
+            nombreDeUsuario +
+            "' AND clave = '" +
+            clave +
+            "' AND idEvento = '" +
+            idEvento +
+            "'",
+            (err, rows) => {
+                if (rows.length === 0) {
+                    connection.query(
+                        "INSERT INTO usuario (nombreDeUsuario, clave, idEvento) VALUES ('" +
+                        nombreDeUsuario +
+                        "', '" +
+                        clave +
+                        "', " +
+                        idEvento +
+                        ")"
+                    );
+                }
             }
-        }
-    );
-    return true;
+        );
+        connection.end();
+    });
 }
 
 app.get("/read", (req, res) => {
