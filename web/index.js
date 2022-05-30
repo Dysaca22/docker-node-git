@@ -107,32 +107,30 @@ app.get("/deleteAll", (req, res) => {
 app.post("/loadCSV", (req, res) => {
     if (!req.files) return res.send("Sin archivos cargados");
 
-    const conn = pool.getConnection((err, connection) => {
-
-        try {
-            const file = req.files.file;
-            csvtojson()
-                .fromFile(file.tempFilePath)
-                .then((source) => {
-                    try {
-                        for (var i = 0; i < source.length; i++) {
-                            var nombreDeUsuario = source[i]["nombreDeUsuario"],
-                                clave = source[i]["clave"],
-                                idEvento = source[i]["idEvento"];
-                            console.log(i);
-                            agregarUsuario(conn, nombreDeUsuario, clave, idEvento);
-                        }
-                        res.send("ok");
-                    } catch (e) {
-                        console.log(e);
-                        res.send("Hubo un error cargando el csv");
+    const conn = pool.getConnection();
+    try {
+        const file = req.files.file;
+        csvtojson()
+            .fromFile(file.tempFilePath)
+            .then((source) => {
+                try {
+                    for (var i = 0; i < source.length; i++) {
+                        var nombreDeUsuario = source[i]["nombreDeUsuario"],
+                            clave = source[i]["clave"],
+                            idEvento = source[i]["idEvento"];
+                        console.log(i);
+                        agregarUsuario(conn, nombreDeUsuario, clave, idEvento);
                     }
-                });
-        } catch {
-            res.send("El nombre del parametro del archivo debe llamarse 'file'");
-        }
-        conn.end();
-    });
+                    res.send("ok");
+                } catch (e) {
+                    console.log(e);
+                    res.send("Hubo un error cargando el csv");
+                }
+            });
+    } catch {
+        res.send("El nombre del parametro del archivo debe llamarse 'file'");
+    }
+    conn.end();
 });
 
 function agregarUsuario(conn, nombreDeUsuario, clave, idEvento) {
